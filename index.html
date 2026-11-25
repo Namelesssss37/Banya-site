@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ЛесСтрой — Бытовки, дачные бани и хозблоки в Ивановской области</title>
+  <!-- Подключаем шрифт Inter для чистой и надежной типографики -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Подключаем Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Настраиваем кастомную палитру под теплый деревянный/графитовый строительный бренд
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            timber: {
+              50: '#FAF6F0',
+              100: '#F2E8D8',
+              200: '#E3CEB0',
+              500: '#A46B3E',
+              600: '#8A562E',
+              700: '#6E4322',
+              800: '#54331A',
+            },
+            pine: {
+              600: '#2E5A3E',
+              700: '#224530',
+            },
+            graphite: {
+              800: '#1E2226',
+              900: '#14171A',
+              950: '#0D0F11',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* Плавное раскрытие аккордеонов FAQ и легкие переходы */
+    .accordion-content {
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+    /* Кастомный акцент для ползунков и чекбоксов */
+    input[type="range"].wood-slider {
+      accent-color: #8A562E;
+    }
+  </style>
+</head>
+<body class="bg-timber-50 text-graphite-900 font-sans antialiased selection:bg-timber-600 selection:text-white">
+
+  <!-- Шапка сайта с навигацией, регионом работы и быстрой кнопкой расчета -->
+  <header class="sticky top-0 z-40 bg-timber-50/95 backdrop-blur border-b border-timber-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-3">
+        <!-- Логотип и регион -->
+        <a href="#" class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-graphite-900 text-timber-200 flex items-center justify-center font-extrabold text-lg shrink-0 shadow-sm">
+            ЛС
+          </div>
+          <div class="min-w-0">
+            <div class="font-extrabold text-base sm:text-lg tracking-tight text-graphite-900 leading-none">
+              ЛесСтрой
+            </div>
+            <div class="text-[11px] sm:text-xs text-timber-700 font-medium truncate mt-1">
+              Ивановская обл. и ближайшие города
+            </div>
+          </div>
+        </a>
+
+        <!-- Навигация для десктопа -->
+        <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-graphite-800">
+          <a href="#catalog" class="hover:text-timber-600 transition">Каталог</a>
+          <a href="#calculator" class="hover:text-timber-600 transition">Калькулятор</a>
+          <a href="#benefits" class="hover:text-timber-600 transition">Преимущества</a>
+          <a href="#steps" class="hover:text-timber-600 transition">Этапы работы</a>
+          <a href="#faq" class="hover:text-timber-600 transition">Вопросы</a>
+        </nav>
+
+        <!-- Кнопка расчета и бургер для мобильных -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <a href="#calculator" class="inline-flex items-center justify-center rounded-xl bg-timber-600 hover:bg-timber-700 active:scale-[0.99] text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 sm:px-5 sm:py-3 shadow-sm transition">
+            Рассчитать стоимость
+          </a>
+          <button
+            id="mobileMenuBtn"
+            type="button"
+            aria-label="Открыть меню"
+            class="lg:hidden p-2.5 rounded-xl border border-timber-200 bg-white text-graphite-900 hover:bg-timber-100 transition"
+          >
+            <svg id="menuIconOpen" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg id="menuIconClose" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Выпадающее мобильное меню -->
+      <div id="mobileMenu" class="lg:hidden hidden pb-4 pt-2 border-t border-timber-200 space-y-1 text-sm font-medium">
+        <a href="#catalog" class="block px-3 py-2.5 rounded-xl hover:bg-timber-100 text-graphite-900">Каталог моделей</a>
+        <a href="#calculator" class="block px-3 py-2.5 rounded-xl hover:bg-timber-100 text-graphite-900">Калькулятор стоимости</a>
+        <a href="#benefits" class="block px-3 py-2.5 rounded-xl hover:bg-timber-100 text-graphite-900">Преимущества ЛесСтрой</a>
+        <a href="#steps" class="block px-3 py-2.5 rounded-xl hover:bg-timber-100 text-graphite-900">Как мы работаем</a>
+        <a href="#faq" class="block px-3 py-2.5 rounded-xl hover:bg-timber-100 text-graphite-900">Частые вопросы</a>
+        <a href="#contact" class="block px-3 py-2.5 rounded-xl hover:bg-timber-100 text-graphite-900">Контакты и заявка</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Главный экран (Hero) -->
+    <section class="relative overflow-hidden bg-graphite-950 text-white">
+      <!-- Декоративный теплый градиент поверх темного графита -->
+      <div class="absolute inset-0 bg-gradient-to-br from-graphite-950 via-graphite-900 to-timber-800/40 pointer-events-none"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          <!-- Левая колонка: оффер и преимущества -->
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-timber-200 text-xs sm:text-sm font-medium">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              Иваново, Шуя, Кохма, Кинешма, Тейково, Фурманов и соседи
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl lg:text-[52px] font-extrabold tracking-tight leading-[1.1]">
+              Бытовки, дачные бани и хозблоки от производителя
+            </h1>
+
+            <p class="text-base sm:text-lg text-gray-300 max-w-2xl leading-relaxed">
+              Собираем крепкие деревянные постройки для дачи, стройки и загородного участка. Привезем и установим на участке без лишней суеты — по прозрачной смете.
+            </p>
+
+            <!-- 3 ключевых преимущества -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-1">
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <div class="text-timber-200 font-bold text-sm sm:text-base">Свое производство</div>
+                <p class="text-xs sm:text-sm text-gray-300 mt-1">Контроль пиломатериала и сборки без наценок перекупов</p>
+              </div>
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <div class="text-timber-200 font-bold text-sm sm:text-base">Доставка и установка</div>
+                <p class="text-xs sm:text-sm text-gray-300 mt-1">Привезем спецтехникой и выставим на блоки по уровню</p>
+              </div>
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <div class="text-timber-200 font-bold text-sm sm:text-base">Честная смета</div>
+                <p class="text-xs sm:text-sm text-gray-300 mt-1">Фиксируем комплектацию и цену до начала работ</p>
+              </div>
+            </div>
+
+            <!-- Основные кнопки -->
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+              <a href="#calculator" class="inline-flex items-center justify-center rounded-xl bg-timber-600 hover:bg-timber-500 text-white font-semibold px-6 py-4 text-sm sm:text-base transition shadow-lg shadow-black/20">
+                Рассчитать на калькуляторе
+              </a>
+              <a href="#catalog" class="inline-flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold px-6 py-4 text-sm sm:text-base transition">
+                Смотреть каталог
+              </a>
+            </div>
+          </div>
+
+          <!-- Правая колонка: быстрая карточка расчета и визуальный блок -->
+          <div class="lg:col-span-5">
+            <div class="rounded-3xl bg-white text-graphite-900 p-5 sm:p-7 shadow-2xl border border-timber-200">
+              <div class="flex items-start justify-between gap-3 mb-4">
+                <div>
+                  <span class="inline-block text-xs font-semibold uppercase tracking-wider text-timber-700 bg-timber-100 px-2.5 py-1 rounded-lg">
+                    Быстрый расчет
+                  </span>
+                  <h2 class="text-xl sm:text-2xl font-bold mt-2">Узнайте цену под ваш участок</h2>
+                </div>
+              </div>
+
+              <!-- Встроенная SVG-иллюстрация постройки для атмосферы бренда -->
+              <div class="rounded-2xl bg-timber-50 border border-timber-200/80 p-3 mb-5">
+                <svg viewBox="0 0 420 130" class="w-full h-28 sm:h-32" role="img" aria-label="Схематичный вид дачной бытовки или бани">
+                  <rect width="420" height="130" rx="14" fill="#FAF6F0" />
+                  <!-- Земля и опорные блоки -->
+                  <line x1="20" y1="108" x2="400" y2="108" stroke="#8A562E" stroke-width="2.5" stroke-linecap="round" />
+                  <rect x="85" y="98" width="22" height="10" rx="2" fill="#54331A" />
+                  <rect x="199" y="98" width="22" height="10" rx="2" fill="#54331A" />
+                  <rect x="313" y="98" width="22" height="10" rx="2" fill="#54331A" />
+                  <!-- Корпус бытовки/бани -->
+                  <rect x="70" y="38" width="280" height="60" rx="6" fill="#E3CEB0" stroke="#6E4322" stroke-width="2.5" />
+                  <!-- Односкатная/двускатная крыша -->
+                  <polygon points="62,38 210,16 358,38" fill="#1E2226" stroke="#14171A" stroke-width="2" />
+                  <!-- Дверь и окна -->
+                  <rect x="102" y="54" width="34" height="44" rx="3" fill="#8A562E" stroke="#54331A" stroke-width="2" />
+                  <rect x="166" y="54" width="54" height="28" rx="3" fill="#EFF6FF" stroke="#54331A" stroke-width="2" />
+                  <rect x="248" y="54" width="68" height="28" rx="3" fill="#EFF6FF" stroke="#54331A" stroke-width="2" />
+                  <!-- Подпись -->
+                  <text x="210" y="123" text-anchor="middle" fill="#6E4322" font-size="11" font-weight="600">
+                    Каркас + утепление + доставка манипулятором
+                  </text>
+                </svg>
+              </div>
+
+              <form id="heroQuickForm" class="space-y-3.5">
+                <div>
+                  <label for="heroType" class="block text-xs font-semibold text-graphite-800 mb-1.5">
+                    Что интересует?
+                  </label>
+                  <select id="heroType" class="w-full rounded-xl border border-timber-200 bg-timber-50 px-3.5 py-3 text-sm font-medium text-graphite-900 focus:outline-none focus:ring-2 focus:ring-timber-600">
+                    <option value="Бытовка (дачная / строительная)">Бытовка (дачная / строительная)</option>
+                    <option value="Дачная баня под ключ">Дачная баня под ключ</option>
+                    <option value="Садовый домик / хозблок">Садовый домик / хозблок</option>
+                    <option value="Индивидуальный размер">Индивидуальный размер</option>
+                  </select>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label for="heroCity" class="block text-xs font-semibold text-graphite-800 mb-1.5">
+                      Населенный пункт
+                    </label>
+                    <input
+                      id="heroCity"
+                      type="text"
+                      placeholder="Например: Иваново, Шуя"
+                      class="w-full rounded-xl border border-timber-200 bg-timber-50 px-3.5 py-3 text-sm text-graphite-900 focus:outline-none focus:ring-2 focus:ring-timber-600"
+                    />
+                  </div>
+                  <div>
+                    <label for="heroPhone" class="block text-xs font-semibold text-graphite-800 mb-1.5">
+                      Телефон или мессенджер
+                    </label>
+                    <input
+                      id="heroPhone"
+                      type="text"
+                      placeholder="+7 (9__) ___-__-__"
+                      class="w-full rounded-xl border border-timber-200 bg-timber-50 px-3.5 py-3 text-sm text-graphite-900 focus:outline-none focus:ring-2 focus:ring-timber-600"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  class="w-full rounded-xl bg-graphite-900 hover:bg-graphite-800 text-white font-semibold py-3.5 px-5 text-sm transition"
+                >
+                  Получить предварительный расчет
+                </button>
+
+                <div id="heroFeedback" class="hidden rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs sm:text-sm p-3"></div>
+              </form>
+
+              <p class="text-[11px] text-gray-500 mt-3 leading-snug">
+                Ориентировочные цены и расчеты на сайте носят справочный характер и уточняются по актуальной смете перед заказом.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Каталог с фильтрами -->
+    <section id="catalog" class="py-14 sm:py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-timber-700">Каталог построек</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-graphite-900 mt-1">
+              Популярные модели и размеры
+            </h2>
+            <p class="text-sm sm:text-base text-gray-600 mt-2 max-w-2xl">
+              Все ориентировочные цены указаны «от...» — точные суммы подставляются под текущую смету вашего заказа и выбранную комплектацию.
+            </p>
+          </div>
+
+          <!-- Кнопки фильтрации -->
+          <div id="catalogFilters" class="flex flex-wrap gap-2" role="group" aria-label="Фильтр каталога">
+            <button data-filter="all" class="filter-btn active px-4 py-2.5 rounded-xl text-sm font-semibold bg-graphite-900 text-white transition">
+              Все
+            </button>
+            <button data-filter="bytovka" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-graphite-800 border border-timber-200 hover:bg-timber-100 transition">
+              Бытовки
+            </button>
+            <button data-filter="banya" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-graphite-800 border border-timber-200 hover:bg-timber-100 transition">
+              Дачные бани
+            </button>
+            <button data-filter="domik" class="filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-graphite-800 border border-timber-200 hover:bg-timber-100 transition">
+              Домики и хозблоки
+            </button>
+          </div>
+        </div>
+
+        <!-- Сетка карточек каталога (наполняется и фильтруется через JS) -->
+        <div id="catalogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+        <div class="mt-8 rounded-2xl bg-timber-100/80 border border-timber-200 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="text-xs sm:text-sm text-graphite-800">
+            <strong class="font-semibold">Примечание по ценам:</strong> цифры в карточках — базовые ориентиры для быстрой оценки. Точную стоимость по текущей смете мастер/менеджер подтвердит после уточнения размеров и доставки.
+          </div>
+          <a href="#calculator" class="shrink-0 inline-flex items-center justify-center rounded-xl bg-timber-600 hover:bg-timber-700 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 transition">
+            Собрать свою конфигурацию
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Интерактивный калькулятор стоимости -->
+    <section id="calculator" class="py-14 sm:py-20 bg-white border-y border-timber-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="text-xs font-bold uppercase tracking-wider text-timber-700">Калькулятор стоимости</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-graphite-900 mt-1">
+            Прикиньте примерную стоимость постройки
+          </h2>
+          <p class="text-sm sm:text-base text-gray-600 mt-2">
+            Выберите тип строения, размер, утепление, дополнительные опции и направление доставки по Ивановской области или соседним городам.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Левая часть: параметры расчета (7 колонок) -->
+          <div class="lg:col-span-7 space-y-6 rounded-3xl bg-timber-50 border border-timber-200 p-5 sm:p-7">
+            <!-- 1. Тип постройки -->
+            <div>
+              <label class="block text-sm font-bold text-graphite-900 mb-3">1. Тип постройки</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" id="calcTypeGroup">
+                <button type="button" data-type="bytovka" class="calc-type-btn active rounded-xl border-2 border-timber-600 bg-timber-600 text-white font-semibold py-3 px-4 text-sm text-center transition">
+                  Бытовка
+                </button>
+                <button type="button" data-type="banya" class="calc-type-btn rounded-xl border border-timber-200 bg-white hover:bg-timber-100 text-graphite-900 font-semibold py-3 px-4 text-sm text-center transition">
+                  Дачная баня
+                </button>
+                <button type="button" data-type="domik" class="calc-type-btn rounded-xl border border-timber-200 bg-white hover:bg-timber-100 text-graphite-900 font-semibold py-3 px-4 text-sm text-center transition">
+                  Домик / хозблок
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Размер -->
+            <div>
+              <label for="calcSize" class="block text-sm font-bold text-graphite-900 mb-2">
+                2. Размер постройки
+              </label>
+              <select id="calcSize" class="w-full rounded-xl border border-timber-200 bg-white px-4 py-3 text-sm font-medium text-graphite-900 focus:outline-none focus:ring-2 focus:ring-timber-600"></select>
+            </div>
+
+            <!-- 3. Утепление -->
+            <div>
+              <label class="block text-sm font-bold text-graphite-900 mb-3">3. Утепление</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" id="calcInsulationGroup">
+                <button type="button" data-insulation="none" class="calc-ins-btn rounded-xl border border-timber-200 bg-white hover:bg-timber-100 text-graphite-900 font-medium py-3 px-3.5 text-xs sm:text-sm text-left transition">
+                  <div class="font-bold">Без утепления</div>
+                  <div class="text-xs opacity-80 mt-0.5">Летний / хозвариант</div>
+                </button>
+                <button type="button" data-insulation="50" class="calc-ins-btn active rounded-xl border-2 border-timber-600 bg-timber-100 text-graphite-900 font-medium py-3 px-3.5 text-xs sm:text-sm text-left transition">
+                  <div class="font-bold">Утепление 50 мм</div>
+                  <div class="text-xs opacity-80 mt-0.5">Весна–осень / дача</div>
+                </button>
+                <button type="button" data-insulation="100" class="calc-ins-btn rounded-xl border border-timber-200 bg-white hover:bg-timber-100 text-graphite-900 font-medium py-3 px-3.5 text-xs sm:text-sm text-left transition">
+                  <div class="font-bold">Утепление 100 мм</div>
+                  <div class="text-xs opacity-80 mt-0.5">Усиленный / межсезонье</div>
+                </button>
+              </div>
+            </div>
+
+            <!-- 4. Дополнительные опции -->
+            <div>
+              <label class="block text-sm font-bold text-graphite-900 mb-3">4. Дополнительные опции</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label class="flex items-start gap-3 rounded-xl bg-white border border-timber-200 p-3.5 cursor-pointer hover:border-timber-500 transition">
+                  <input type="checkbox" id="optStove" class="mt-0.5 w-4 h-4 accent-timber-600 rounded" />
+                  <span class="text-sm">
+                    <span class="font-semibold text-graphite-900 block">Печь для бани / обогрева</span>
+                    <span class="text-xs text-gray-500" id="optStovePriceText">+ 28 000 ₽ (ориентир)</span>
+                  </span>
+                </label>
+
+                <label class="flex items-start gap-3 rounded-xl bg-white border border-timber-200 p-3.5 cursor-pointer hover:border-timber-500 transition">
+                  <input type="checkbox" id="optElectric" checked class="mt-0.5 w-4 h-4 accent-timber-600 rounded" />
+                  <span class="text-sm">
+                    <span class="font-semibold text-graphite-900 block">Базовая разводка электрики</span>
+                    <span class="text-xs text-gray-500">+ 12 000 ₽ (ориентир)</span>
+                  </span>
+                </label>
+
+                <label class="flex items-start gap-3 rounded-xl bg-white border border-timber-200 p-3.5 cursor-pointer hover:border-timber-500 transition">
+                  <input type="checkbox" id="optFoundation" checked class="mt-0.5 w-4 h-4 accent-timber-600 rounded" />
+                  <span class="text-sm">
+                    <span class="font-semibold text-graphite-900 block">Фундаментные блоки / тумбы</span>
+                    <span class="text-xs text-gray-500">+ 8 500 ₽ (ориентир)</span>
+                  </span>
+                </label>
+
+                <label class="flex items-start gap-3 rounded-xl bg-white border border-timber-200 p-3.5 cursor-pointer hover:border-timber-500 transition">
+                  <input type="checkbox" id="optCanopy" class="mt-0.5 w-4 h-4 accent-timber-600 rounded" />
+                  <span class="text-sm">
+                    <span class="font-semibold text-graphite-900 block">Крыльцо или козырек</span>
+                    <span class="text-xs text-gray-500">+ 14 000 ₽ (ориентир)</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 5. Направление и расстояние доставки -->
+            <div class="pt-1 space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="calcCitySelect" class="block text-sm font-bold text-graphite-900 mb-2">
+                    5. Город / направление
+                  </label>
+                  <select id="calcCitySelect" class="w-full rounded-xl border border-timber-200 bg-white px-4 py-3 text-sm font-medium text-graphite-900 focus:outline-none focus:ring-2 focus:ring-timber-600">
+                    <option value="20" data-label="Иваново и пригород (~20 км)">Иваново и пригород (~20 км)</option>
+                    <option value="35" data-label="Кохма / Фурманов (~35 км)">Кохма / Фурманов (~35 км)</option>
+                    <option value="50" data-label="Шуя / Тейково (~50 км)">Шуя / Тейково (~50 км)</option>
+                    <option value="95" data-label="Кинешма / область (~95 км)">Кинешма / область (~95 км)</option>
+                    <option value="110" data-label="Владимир / Ковров (~110 км)">Владимир / Ковров (~110 км)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between text-sm font-bold text-graphite-900 mb-2">
+                    <label for="calcDistance">Расстояние от базы</label>
+                    <span class="text-timber-700 font-extrabold"><span id="distanceValue">20</span> км</span>
+                  </div>
+                  <input
+                    id="calcDistance"
+                    type="range"
+                    min="5"
+                    max="180"
+                    step="5"
+                    value="20"
+                    class="wood-slider w-full h-2 bg-timber-200 rounded-lg cursor-pointer mt-3"
+                  />
+                  <div class="flex justify-between text-[11px] text-gray-500 mt-1">
+                    <span>5 км</span>
+                    <span>90 км</span>
+                    <span>180 км</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Правая часть: итоговый расчет и отправка заявки (5 колонок) -->
+          <div class="lg:col-span-5 lg:sticky lg:top-24 rounded-3xl bg-graphite-900 text-white p-6 sm:p-7 shadow-xl">
+            <div class="flex items-center justify-between gap-2 pb-4 border-b border-white/10">
+              <span class="text-xs font-semibold uppercase tracking-wider text-timber-200">
+                Предварительная оценка
+              </span>
+              <span class="text-xs text-gray-400">Ориентир</span>
+            </div>
+
+            <div class="py-5 border-b border-white/10">
+              <div class="text-xs text-gray-400 mb-1">Примерная итоговая сумма с доставкой:</div>
+              <div id="calcTotalPrice" class="text-3xl sm:text-4xl font-extrabold text-timber-200 tracking-tight">
+                0 ₽
+              </div>
+              <p class="text-xs text-gray-300 mt-2 leading-relaxed">
+                Точная цена фиксируется по актуальной смете производства после уточнения деталей подъезда и комплектации.
+              </p>
+            </div>
+
+            <!-- Детализация расчета -->
+            <div id="calcBreakdown" class="py-4 space-y-2.5 text-xs sm:text-sm border-b border-white/10"></div>
+
+            <!-- Форма отправки выбранной конфигурации -->
+            <form id="calcLeadForm" class="pt-5 space-y-3">
+              <div class="text-sm font-bold text-white">Зафиксировать расчет и получить смету</div>
+              <input
+                id="calcLeadName"
+                type="text"
+                placeholder="Ваше имя"
+                class="w-full rounded-xl bg-white/10 border border-white/15 px-3.5 py-3 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-timber-500"
+              />
+              <input
+                id="calcLeadContact"
+                type="text"
+                placeholder="Телефон, Telegram или WhatsApp"
+                class="w-full rounded-xl bg-white/10 border border-white/15 px-3.5 py-3 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-timber-500"
+              />
+              <button
+                type="submit"
+                class="w-full rounded-xl bg-timber-600 hover:bg-timber-500 text-white font-semibold py-3.5 px-5 text-sm transition"
+              >
+                Отправить расчет на проверку
+              </button>
+              <div id="calcLeadFeedback" class="hidden rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 text-xs sm:text-sm p-3.5"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Блок преимуществ работы с «ЛесСтрой» -->
+    <section id="benefits" class="py-14 sm:py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mb-10">
+          <span class="text-xs font-bold uppercase tracking-wider text-timber-700">Почему «ЛесСтрой»</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-graphite-900 mt-1">
+            Надежная база для загородного участка
+          </h2>
+          <p class="text-sm sm:text-base text-gray-600 mt-2">
+            Делаем так, чтобы покупка бытовки или бани прошла спокойно: без скрытых накруток в день привоза и лишней беготни.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="rounded-2xl bg-white border border-timber-200 p-6 shadow-xs">
+            <div class="w-11 h-11 rounded-xl bg-timber-100 text-timber-700 flex items-center justify-center font-bold text-lg mb-4">01</div>
+            <h3 class="text-lg font-bold text-graphite-900">Собственное производство</h3>
+            <p class="text-sm text-gray-600 mt-2 leading-relaxed">
+              Собираем конструкции на своей площадке в регионе. Легко скорректировать размер, расположение двери или окна под ваш участок.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-timber-200 p-6 shadow-xs">
+            <div class="w-11 h-11 rounded-xl bg-timber-100 text-timber-700 flex items-center justify-center font-bold text-lg mb-4">02</div>
+            <h3 class="text-lg font-bold text-graphite-900">Доставка по области и рядом</h3>
+            <p class="text-sm text-gray-600 mt-2 leading-relaxed">
+              Возим по Иванову, Шуе, Кохме, Кинешме, Тейково, Фурманову, а также в сторону Владимира, Коврова и других соседних городов.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-timber-200 p-6 shadow-xs">
+            <div class="w-11 h-11 rounded-xl bg-timber-100 text-timber-700 flex items-center justify-center font-bold text-lg mb-4">03</div>
+            <h3 class="text-lg font-bold text-graphite-900">Прозрачная смета</h3>
+            <p class="text-sm text-gray-600 mt-2 leading-relaxed">
+              Заранее проговариваем базовую комплектацию, утепление, допы и стоимость доставки. Никаких «сюрпризов» после выгрузки.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-timber-200 p-6 shadow-xs">
+            <div class="w-11 h-11 rounded-xl bg-timber-100 text-timber-700 flex items-center justify-center font-bold text-lg mb-4">04</div>
+            <h3 class="text-lg font-bold text-graphite-900">Продуманная конструктивка</h3>
+            <p class="text-sm text-gray-600 mt-2 leading-relaxed">
+              Крепкий каркас, защита древесины, аккуратная внутренняя отделка и понятные варианты утепления под сезон или круглый год.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-timber-200 p-6 shadow-xs">
+            <div class="w-11 h-11 rounded-xl bg-timber-100 text-timber-700 flex items-center justify-center font-bold text-lg mb-4">05</div>
+            <h3 class="text-lg font-bold text-graphite-900">Удобная коммуникация</h3>
+            <p class="text-sm text-gray-600 mt-2 leading-relaxed">
+              Можно обсудить детали в переписке, прислать фото участка или созвониться — как вам комфортнее по времени и формату.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-timber-200 p-6 shadow-xs">
+            <div class="w-11 h-11 rounded-xl bg-timber-100 text-timber-700 flex items-center justify-center font-bold text-lg mb-4">06</div>
+            <h3 class="text-lg font-bold text-graphite-900">Быстрая установка на месте</h3>
+            <p class="text-sm text-gray-600 mt-2 leading-relaxed">
+              Выгружаем манипулятором и выставляем постройку на опорные блоки, чтобы она ровно стояла и служила долго.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Этапы работы: от заявки до установки -->
+    <section id="steps" class="py-14 sm:py-20 bg-timber-100/70 border-y border-timber-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-xs font-bold uppercase tracking-wider text-timber-700">Процесс</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-graphite-900 mt-1">
+            Как проходит заказ от заявки до установки
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="rounded-2xl bg-white border border-timber-200 p-6 relative">
+            <div class="text-xs font-extrabold text-timber-600 uppercase tracking-wider">Шаг 1</div>
+            <h3 class="text-lg font-bold text-graphite-900 mt-1">Заявка и задача</h3>
+            <p class="text-sm text-gray-600 mt-2">
+              Оставляете заявку на сайте или в мессенджере, указываете размер, назначение постройки и населенный пункт.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-timber-200 p-6 relative">
+            <div class="text-xs font-extrabold text-timber-600 uppercase tracking-wider">Шаг 2</div>
+            <h3 class="text-lg font-bold text-graphite-900 mt-1">Расчет и согласование</h3>
+            <p class="text-sm text-gray-600 mt-2">
+              Подбираем комплектацию, уточняем детали подъезда техники и согласуем прозрачную смету и сроки готовности.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-timber-200 p-6 relative">
+            <div class="text-xs font-extrabold text-timber-600 uppercase tracking-wider">Шаг 3</div>
+            <h3 class="text-lg font-bold text-graphite-900 mt-1">Изготовление</h3>
+            <p class="text-sm text-gray-600 mt-2">
+              Собираем постройку на производстве с соблюдением размеров, утепления и выбранных дополнительных опций.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-white border border-timber-200 p-6 relative">
+            <div class="text-xs font-extrabold text-timber-600 uppercase tracking-wider">Шаг 4</div>
+            <h3 class="text-lg font-bold text-graphite-900 mt-1">Доставка и установка</h3>
+            <p class="text-sm text-gray-600 mt-2">
+              Привозим на участок манипулятором, ставим на подготовленные блоки и сдаем готовую постройку.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Блок FAQ -->
+    <section id="faq" class="py-14 sm:py-20">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-8">
+          <span class="text-xs font-bold uppercase tracking-wider text-timber-700">Ответы на вопросы</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-graphite-900 mt-1">
+            Частые вопросы клиентов
+          </h2>
+        </div>
+
+        <div id="faqList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- Форма обратной связи / заявки -->
+    <section id="contact" class="py-14 sm:py-20 bg-white border-t border-timber-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-5 space-y-5">
+            <span class="text-xs font-bold uppercase tracking-wider text-timber-700">Связь с «ЛесСтрой»</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-graphite-900">
+              Оставьте заявку на расчет или консультацию
+            </h2>
+            <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+              Работаем по Ивановской области и ближайшим городам. Можете написать в мессенджер, оставить номер для звонка или просто описать задачу — ответим по делу.
+            </p>
+
+            <div class="rounded-2xl bg-timber-50 border border-timber-200 p-5 space-y-3 text-sm">
+              <div>
+                <div class="text-xs font-semibold text-timber-700 uppercase">Регион работы</div>
+                <div class="font-semibold text-graphite-900 mt-0.5">
+                  Иваново, Шуя, Кохма, Кинешма, Тейково, Фурманов и соседние города (Владимир, Ковров и др. по договоренности)
+                </div>
+              </div>
+              <div>
+                <div class="text-xs font-semibold text-timber-700 uppercase">Формат связи</div>
+                <div class="font-semibold text-graphite-900 mt-0.5">
+                  Телефон, WhatsApp, Telegram или заявка с сайта
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <form id="mainContactForm" class="rounded-3xl bg-timber-50 border border-timber-200 p-6 sm:p-8 space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="contactName" class="block text-xs font-bold text-graphite-900 mb-1.5">
+                    Ваше имя
+                  </label>
+                  <input
+                    id="contactName"
+                    type="text"
+                    placeholder="Как к вам обращаться"
+                    class="w-full rounded-xl border border-timber-200 bg-white px-4 py-3 text-sm text-graphite-900 focus:outline-none focus:ring-2 focus:ring-timber-600"
+                  />
+                </div>
+                <div>
+                  <label for="contactPhone" class="block text-xs font-bold text-graphite-900 mb-1.5">
+                    Телефон или мессенджер *
+                  </label>
+                  <input
+                    id="contactPhone"
+                    type="text"
+                    required
+                    placeholder="+7 (9__) ___-__-__ или @username"
+                    class="w-full rounded-xl border border-timber-200 bg-white px-4 py-3 text-sm text-graphite-900 focus:outline-none focus:ring-2 focus:ring-timber-600"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="contactChannel" class="block text-xs font-bold text-graphite-900 mb-1.5">
+                    Предпочтительный способ связи
+                  </label>
+                  <select id="contactChannel" class="w-full rounded-xl border border-timber-200 bg-white px-4 py-3 text-sm font-medium text-graphite-900 focus:outline-none focus:ring-2 focus:ring-timber-600">
+                    <option value="Переписка в мессенджере (Telegram / WhatsApp)">Переписка в мессенджере (Telegram / WhatsApp)</option>
+                    <option value="Звонок по телефону">Звонок по телефону</option>
+                    <option value="Любой удобный способ">Любой удобный способ</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="contactLocation" class="block text-xs font-bold text-graphite-900 mb-1.5">
+                    Город / район участка
+                  </label>
+                  <input
+                    id="contactLocation"
+                    type="text"
+                    placeholder="Например: Ивановский район, СНТ..."
+                    class="w-full rounded-xl border border-timber-200 bg-white px-4 py-3 text-sm text-graphite-900 focus:outline-none focus:ring-2 focus:ring-timber-600"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="contactMessage" class="block text-xs font-bold text-graphite-900 mb-1.5">
+                  Что нужно построить и пожелания
+                </label>
+                <textarea
+                  id="contactMessage"
+                  rows="4"
+                  placeholder="Например: нужна дачная баня или бытовка 6×2.3 м, утепление, доставка в сторону Шуи..."
+                  class="w-full rounded-xl border border-timber-200 bg-white px-4 py-3 text-sm text-graphite-900 focus:outline-none focus:ring-2 focus:ring-timber-600"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full sm:w-auto rounded-xl bg-timber-600 hover:bg-timber-700 text-white font-semibold px-7 py-3.5 text-sm sm:text-base transition"
+              >
+                Отправить заявку
+              </button>
+
+              <div id="mainContactFeedback" class="hidden rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-sm p-4"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Подвал сайта -->
+  <footer class="bg-graphite-950 text-gray-300 py-10 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div>
+        <div class="text-white font-extrabold text-lg">ЛесСтрой</div>
+        <p class="text-xs sm:text-sm text-gray-400 mt-1">
+          Бытовки, дачные бани, садовые домики и хозблоки • Ивановская область и ближайшие города
+        </p>
+      </div>
+      <div class="text-xs text-gray-400 max-w-md sm:text-right">
+        Цены и расчеты на странице являются предварительными ориентирами и уточняются по текущей смете перед оформлением заказа.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Интерактивная логика сайта: каталог, фильтры, калькулятор, FAQ и формы -->
+  <script>
+    (function () {
+      // Данные каталога (ориентировочные цены для удобства оценки перед подстановкой актуальной сметы)
+      const catalogItems = [
+        {
+          id: 'byt-6x23',
+          category: 'bytovka',
+          badge: 'Бытовка',
+          title: 'Бытовка универсальная 6×2,3 м',
+          size: '6,0 × 2,3 м',
+          basePrice: 85000,
+          specs: [
+            'Каркас и обвязка из бруса/доски',
+            'Кровля с защитой от протечек',
+            'Дверь, окно и базовый пол',
+            'Подходит для дачи и стройки'
+          ]
+        },
+        {
+          id: 'byt-4x23',
+          category: 'bytovka',
+          badge: 'Бытовка',
+          title: 'Компактная бытовка 4×2,3 м',
+          size: '4,0 × 2,3 м',
+          basePrice: 68000,
+          specs: [
+            'Удобна для небольшого участка',
+            'Быстрая погрузка и установка',
+            'Варианты утепления под сезон',
+            'Место под инструмент и отдых'
+          ]
+        },
+        {
+          id: 'byt-7x23',
+          category: 'bytovka',
+          badge: 'Бытовка',
+          title: 'Удлиненная бытовка-хозблок 7×2,3 м',
+          size: '7,0 × 2,3 м',
+          basePrice: 102000,
+          specs: [
+            'Увеличенная полезная площадь',
+            'Возможность зонирования пространства',
+            'Надежная конструкция для хранения',
+            'Доставка манипулятором на участок'
+          ]
+        },
+        {
+          id: 'ban-4x23',
+          category: 'banya',
+          badge: 'Дачная баня',
+          title: 'Дачная баня 4×2,3 м',
+          size: '4,0 × 2,3 м',
+          basePrice: 165000,
+          specs: [
+            'Парная и зона отдыха/предбанник',
+            'Деревянная отделка внутри',
+            'Подготовка под печь и дымоход',
+            'Готовое решение для загородного отдыха'
+          ]
+        },
+        {
+          id: 'ban-6x23',
+          category: 'banya',
+          badge: 'Дачная баня',
+          title: 'Баня 6×2,3 м с комнатой отдыха',
+          size: '6,0 × 2,3 м',
+          basePrice: 215000,
+          specs: [
+            'Просторная парная и комната отдыха',
+            'Удобная планировка для семьи и гостей',
+            'Утепление под комфортный прогрев',
+            'Установка на опорные блоки на участке'
+          ]
+        },
+        {
+          id: 'dom-5x3',
+          category: 'domik',
+          badge: 'Домик / хозблок',
+          title: 'Садовый домик / хозблок 5×3 м',
+          size: '5,0 × 3,0 м',
+          basePrice: 145000,
+          specs: [
+            'Увеличенная ширина для комфорта',
+            'Под летнее проживание или инвентарь',
+            'Аккуратный внешний вид на участке',
+            'Индивидуальный подбор окон и дверей'
+          ]
+        }
+      ];
+
+      // Конфигурация размеров и базовых цен для калькулятора
+      const calculatorConfig = {
+        bytovka: {
+          label: 'Бытовка',
+          sizes: [
+            { id: '4x2.3', label: '4,0 × 2,3 м (компактная)', price: 68000 },
+            { id: '6x2.3', label: '6,0 × 2,3 м (стандарт)', price: 85000 },
+            { id: '7x2.3', label: '7,0 × 2,3 м (увеличенная)', price: 102000 }
+          ],
+          stovePrice: 24000,
+          stoveLabel: 'Отопительная печь / буржуйка'
+        },
+        banya: {
+          label: 'Дачная баня',
+          sizes: [
+            { id: '4x2.3', label: '4,0 × 2,3 м (парная + предбанник)', price: 165000 },
+            { id: '5x2.3', label: '5,0 × 2,3 м (расширенная)', price: 190000 },
+            { id: '6x2.3', label: '6,0 × 2,3 м (с комнатой отдыха)', price: 215000 }
+          ],
+          stovePrice: 36000,
+          stoveLabel: 'Банная печь с дымоходом'
+        },
+        domik: {
+          label: 'Домик / хозблок',
+          sizes: [
+            { id: '3x2.3', label: '3,0 × 2,3 м (хозблок)', price: 56000 },
+            { id: '5x3.0', label: '5,0 × 3,0 м (садовый домик)', price: 145000 },
+            { id: '6x3.0', label: '6,0 × 3,0 м (просторный домик)', price: 178000 }
+          ],
+          stovePrice: 26000,
+          stoveLabel: 'Печь для обогрева'
+        }
+      };
+
+      // Надбавки за утепление
+      const insulationPrices = {
+        none: { label: 'Без утепления', price: 0 },
+        50: { label: 'Утепление 50 мм', price: 18000 },
+        100: { label: 'Утепление 100 мм', price: 36000 }
+      };
+
+      // Стоимость дополнительных опций (кроме печи, которая зависит от типа постройки)
+      const extraOptions = {
+        electric: { label: 'Базовая разводка электрики', price: 12000 },
+        foundation: { label: 'Фундаментные блоки / тумбы', price: 8500 },
+        canopy: { label: 'Крыльцо или козырек', price: 14000 }
+      };
+
+      // Вопросы и ответы для блока FAQ
+      const faqItems = [
+        {
+          q: 'По каким городам и районам вы работаете?',
+          a: 'Основной регион — Иваново и Ивановская область (Шуя, Кохма, Кинешма, Тейково, Фурманов, Вичуга, Комсомольск, Родники и прилегающие СНТ/поселки). По договоренности выезжаем и в ближайшие города соседних областей, например Владимир или Ковров.'
+        },
+        {
+          q: 'Насколько точные цены указаны на сайте и в калькуляторе?',
+          a: 'Цены на странице — ориентировочные для быстрой оценки бюджета. Итоговая смета рассчитывается индивидуально под текущую стоимость материалов, выбранный размер, утепление, допы и расстояние доставки.'
+        },
+        {
+          q: 'Как доставляется и устанавливается постройка на участке?',
+          a: 'Постройка доставляется транспортом с манипулятором и выставляется на опорные блоки. Важно заранее обеспечить подъездные пути нужной ширины и ровную площадку без помех для стрелы и техники.'
+        },
+        {
+          q: 'Можно ли заказать индивидуальный размер или поменять планировку?',
+          a: 'Да, так как у нас свое производство, многие параметры можно скорректировать под ваши задачи — например, положение окна/двери, степень утепления или дополнительные опции.'
+        },
+        {
+          q: 'Как лучше оформить заявку — позвонить или написать в переписке?',
+          a: 'Как вам удобнее. Можно оставить заявку через форму на сайте или калькулятор — менеджер свяжется в выбранном формате, уточнит детали и подготовит предварительный расчет.'
+        }
+      ];
+
+      // Форматирование числа в рубли
+      function formatRub(amount) {
+        return new Intl.NumberFormat('ru-RU').format(Math.round(amount)) + ' ₽';
+      }
+
+      // Расчет примерной стоимости доставки по километражу
+      function calculateDelivery(km) {
+        const safeKm = Math.max(5, Number(km) || 20);
+        // Базовая подача + стоимость за километр
+        return 6000 + safeKm * 110;
+      }
+
+      // 1. Рендер и фильтрация каталога
+      const catalogGrid = document.getElementById('catalogGrid');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      let currentCategory = 'all';
+
+      function renderCatalog() {
+        const filtered = currentCategory === 'all'
+          ? catalogItems
+          : catalogItems.filter((item) => item.category === currentCategory);
+
+        catalogGrid.innerHTML = filtered.map((item) => `
+          <article class="rounded-3xl bg-white border border-timber-200 p-6 flex flex-col justify-between shadow-xs hover:border-timber-500 transition">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-timber-100 text-timber-800">
+                  ${item.badge}
+                </span>
+                <span class="text-xs font-semibold text-gray-500">${item.size}</span>
+              </div>
+
+              <h3 class="text-xl font-bold text-graphite-900">${item.title}</h3>
+
+              <div class="mt-3 flex items-baseline gap-2">
+                <span class="text-xs font-medium text-gray-500">ориентир от</span>
+                <span class="text-2xl font-extrabold text-timber-700">${formatRub(item.basePrice)}</span>
+              </div>
+              <div class="text-[11px] text-gray-400 mt-0.5">
+                Точная цена подставляется по текущей смете
+              </div>
+
+              <ul class="mt-5 space-y-2 text-sm text-gray-700 border-t border-timber-100 pt-4">
+                ${item.specs.map((spec) => `
+                  <li class="flex items-start gap-2">
+                    <span class="text-timber-600 font-bold leading-5">•</span>
+                    <span>${spec}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-timber-100 flex items-center gap-2.5">
+              <button
+                type="button"
+                data-select-model="${item.id}"
+                class="select-model-btn w-full rounded-xl bg-graphite-900 hover:bg-timber-700 text-white font-semibold py-3 px-4 text-sm transition"
+              >
+                Рассчитать в калькуляторе
+              </button>
+            </div>
+          </article>
+        `).join('');
+
+        // Навешиваем обработчики на кнопки выбора модели в калькуляторе
+        document.querySelectorAll('.select-model-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const modelId = btn.getAttribute('data-select-model');
+            const found = catalogItems.find((m) => m.id === modelId);
+            if (!found) return;
+
+            setCalculatorType(found.category);
+            const sizeSelect = document.getElementById('calcSize');
+            const matchingOption = Array.from(sizeSelect.options).find((opt) =>
+              found.size.replace(',', '.').includes(opt.value.split('x')[0])
+            );
+            if (matchingOption) {
+              sizeSelect.value = matchingOption.value;
+            }
+            updateCalculator();
+            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
+          });
+        });
+      }
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          currentCategory = btn.getAttribute('data-filter');
+          filterButtons.forEach((b) => {
+            b.classList.remove('active', 'bg-graphite-900', 'text-white');
+            b.classList.add('bg-white', 'text-graphite-800', 'border', 'border-timber-200');
+          });
+          btn.classList.add('active', 'bg-graphite-900', 'text-white');
+          btn.classList.remove('bg-white', 'text-graphite-800', 'border', 'border-timber-200');
+          renderCatalog();
+        });
+      });
+
+      // 2. Логика интерактивного калькулятора
+      let calcState = {
+        type: 'bytovka',
+        insulation: '50'
+      };
+
+      const calcSizeSelect = document.getElementById('calcSize');
+      const calcDistanceInput = document.getElementById('calcDistance');
+      const calcCitySelect = document.getElementById('calcCitySelect');
+      const distanceValueSpan = document.getElementById('distanceValue');
+      const optStoveInput = document.getElementById('optStove');
+      const optStovePriceText = document.getElementById('optStovePriceText');
+      const optElectricInput = document.getElementById('optElectric');
+      const optFoundationInput = document.getElementById('optFoundation');
+      const optCanopyInput = document.getElementById('optCanopy');
+      const calcTotalPriceEl = document.getElementById('calcTotalPrice');
+      const calcBreakdownEl = document.getElementById('calcBreakdown');
+
+      function populateSizesForType(type) {
+        const cfg = calculatorConfig[type] || calculatorConfig.bytovka;
+        calcSizeSelect.innerHTML = cfg.sizes.map((s) =>
+          `<option value="${s.id}" data-price="${s.price}">${s.label} — от ${formatRub(s.price)}</option>`
+        ).join('');
+        optStovePriceText.textContent = `+ ${formatRub(cfg.stovePrice)} (ориентир: ${cfg.stoveLabel.toLowerCase()})`;
+      }
+
+      function setCalculatorType(type) {
+        if (!calculatorConfig[type]) return;
+        calcState.type = type;
+
+        document.querySelectorAll('.calc-type-btn').forEach((btn) => {
+          const isActive = btn.getAttribute('data-type') === type;
+          btn.classList.toggle('active', isActive);
+          btn.classList.toggle('border-2', isActive);
+          btn.classList.toggle('border-timber-600', isActive);
+          btn.classList.toggle('bg-timber-600', isActive);
+          btn.classList.toggle('text-white', isActive);
+          btn.classList.toggle('border', !isActive);
+          btn.classList.toggle('border-timber-200', !isActive);
+          btn.classList.toggle('bg-white', !isActive);
+          btn.classList.toggle('text-graphite-900', !isActive);
+        });
+
+        populateSizesForType(type);
+        updateCalculator();
+      }
+
+      function setInsulation(insKey) {
+        if (!insulationPrices[insKey]) return;
+        calcState.insulation = insKey;
+
+        document.querySelectorAll('.calc-ins-btn').forEach((btn) => {
+          const isActive = btn.getAttribute('data-insulation') === insKey;
+          btn.classList.toggle('active', isActive);
+          btn.classList.toggle('border-2', isActive);
+          btn.classList.toggle('border-timber-600', isActive);
+          btn.classList.toggle('bg-timber-100', isActive);
+          btn.classList.toggle('border', !isActive);
+          btn.classList.toggle('border-timber-200', !isActive);
+          btn.classList.toggle('bg-white', !isActive);
+        });
+
+        updateCalculator();
+      }
+
+      function updateCalculator() {
+        const cfg = calculatorConfig[calcState.type];
+        const selectedSizeObj = cfg.sizes.find((s) => s.id === calcSizeSelect.value) || cfg.sizes[0];
+        const insObj = insulationPrices[calcState.insulation];
+        const km = Number(calcDistanceInput.value) || 20;
+        distanceValueSpan.textContent = km;
+
+        let extrasTotal = 0;
+        const extrasList = [];
+
+        if (optStoveInput.checked) {
+          extrasTotal += cfg.stovePrice;
+          extrasList.push({ name: cfg.stoveLabel, price: cfg.stovePrice });
+        }
+        if (optElectricInput.checked) {
+          extrasTotal += extraOptions.electric.price;
+          extrasList.push(extraOptions.electric);
+        }
+        if (optFoundationInput.checked) {
+          extrasTotal += extraOptions.foundation.price;
+          extrasList.push(extraOptions.foundation);
+        }
+        if (optCanopyInput.checked) {
+          extrasTotal += extraOptions.canopy.price;
+          extrasList.push(extraOptions.canopy);
+        }
+
+        const deliveryCost = calculateDelivery(km);
+        const total = selectedSizeObj.price + insObj.price + extrasTotal + deliveryCost;
+
+        calcTotalPriceEl.textContent = `~ ${formatRub(total)}`;
+
+        const rows = [
+          `<div class="flex justify-between gap-2"><span class="text-gray-300">База (${cfg.label}, ${selectedSizeObj.id.replace('.', ',')} м):</span><span class="font-semibold">${formatRub(selectedSizeObj.price)}</span></div>`,
+          `<div class="flex justify-between gap-2"><span class="text-gray-300">${insObj.label}:</span><span class="font-semibold">${insObj.price === 0 ? '0 ₽' : '+' + formatRub(insObj.price)}</span></div>`
+        ];
+
+        extrasList.forEach((ex) => {
+          rows.push(`<div class="flex justify-between gap-2"><span class="text-gray-300">${ex.name}:</span><span class="font-semibold">+${formatRub(ex.price)}</span></div>`);
+        });
+
+        rows.push(`<div class="flex justify-between gap-2 pt-1 border-t border-white/10"><span class="text-gray-300">Доставка (~${km} км):</span><span class="font-semibold">${formatRub(deliveryCost)}</span></div>`);
+
+        calcBreakdownEl.innerHTML = rows.join('');
+      }
+
+      document.querySelectorAll('.calc-type-btn').forEach((btn) => {
+        btn.addEventListener('click', () => setCalculatorType(btn.getAttribute('data-type')));
+      });
+
+      document.querySelectorAll('.calc-ins-btn').forEach((btn) => {
+        btn.addEventListener('click', () => setInsulation(btn.getAttribute('data-insulation')));
+      });
+
+      calcCitySelect.addEventListener('change', () => {
+        const km = Number(calcCitySelect.value) || 20;
+        calcDistanceInput.value = km;
+        updateCalculator();
+      });
+
+      calcDistanceInput.addEventListener('input', updateCalculator);
+      calcSizeSelect.addEventListener('change', updateCalculator);
+      [optStoveInput, optElectricInput, optFoundationInput, optCanopyInput].forEach((el) => {
+        el.addEventListener('change', updateCalculator);
+      });
+
+      // 3. Рендер FAQ с раскрытием/сворачиванием
+      const faqList = document.getElementById('faqList');
+      faqList.innerHTML = faqItems.map((item, idx) => `
+        <div class="rounded-2xl bg-white border border-timber-200 overflow-hidden">
+          <button
+            type="button"
+            data-faq-idx="${idx}"
+            aria-expanded="false"
+            class="faq-toggle w-full flex items-center justify-between gap-4 p-5 text-left font-bold text-graphite-900 hover:bg-timber-50 transition"
+          >
+            <span class="text-sm sm:text-base">${item.q}</span>
+            <span class="faq-icon text-timber-700 text-xl font-bold shrink-0">+</span>
+          </button>
+          <div id="faq-panel-${idx}" class="hidden px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-timber-100 pt-3">
+            ${item.a}
+          </div>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.faq-toggle').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const idx = btn.getAttribute('data-faq-idx');
+          const panel = document.getElementById(`faq-panel-${idx}`);
+          const icon = btn.querySelector('.faq-icon');
+          const isOpen = !panel.classList.contains('hidden');
+
+          panel.classList.toggle('hidden', isOpen);
+          btn.setAttribute('aria-expanded', String(!isOpen));
+          icon.textContent = isOpen ? '+' : '−';
+        });
+      });
+
+      // 4. Мобильное меню
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const menuIconOpen = document.getElementById('menuIconOpen');
+      const menuIconClose = document.getElementById('menuIconClose');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden', !isHidden);
+        menuIconOpen.classList.toggle('hidden', isHidden);
+        menuIconClose.classList.toggle('hidden', !isHidden);
+      });
+
+      mobileMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          menuIconOpen.classList.remove('hidden');
+          menuIconClose.classList.add('hidden');
+        });
+      });
+
+      // 5. Обработка форм (без alert/confirm, с наглядным подтверждением на странице)
+      const heroQuickForm = document.getElementById('heroQuickForm');
+      const heroFeedback = document.getElementById('heroFeedback');
+      heroQuickForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const typeVal = document.getElementById('heroType').value;
+        const cityVal = document.getElementById('heroCity').value.trim() || 'Ивановская область';
+        const phoneVal = document.getElementById('heroPhone').value.trim();
+
+        if (!phoneVal) {
+          heroFeedback.className = 'rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm p-3';
+          heroFeedback.textContent = 'Укажите номер телефона или контакт в мессенджере, чтобы мы могли отправить расчет.';
+          heroFeedback.classList.remove('hidden');
+          return;
+        }
+
+        heroFeedback.className = 'rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs sm:text-sm p-3';
+        heroFeedback.textContent = `Заявка сформирована: «${typeVal}», направление — ${cityVal}, контакт — ${phoneVal}. Свяжемся и уточним расчет по смете.`;
+        heroFeedback.classList.remove('hidden');
+        heroQuickForm.reset();
+      });
+
+      const calcLeadForm = document.getElementById('calcLeadForm');
+      const calcLeadFeedback = document.getElementById('calcLeadFeedback');
+      calcLeadForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameVal = document.getElementById('calcLeadName').value.trim() || 'Клиент';
+        const contactVal = document.getElementById('calcLeadContact').value.trim();
+        const summaryPrice = calcTotalPriceEl.textContent;
+
+        if (!contactVal) {
+          calcLeadFeedback.className = 'rounded-xl bg-amber-950/80 border border-amber-400/40 text-amber-200 text-xs sm:text-sm p-3.5';
+          calcLeadFeedback.textContent = 'Введите телефон или ник в мессенджере для обратной связи.';
+          calcLeadFeedback.classList.remove('hidden');
+          return;
+        }
+
+        calcLeadFeedback.className = 'rounded-xl bg-emerald-950/80 border border-emerald-400/40 text-emerald-200 text-xs sm:text-sm p-3.5';
+        calcLeadFeedback.textContent = `${nameVal}, расчет (${summaryPrice}) зафиксирован для контакта ${contactVal}. Передадим параметры в работу и сверим со сметой.`;
+        calcLeadFeedback.classList.remove('hidden');
+        calcLeadForm.reset();
+      });
+
+      const mainContactForm = document.getElementById('mainContactForm');
+      const mainContactFeedback = document.getElementById('mainContactFeedback');
+      mainContactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameVal = document.getElementById('contactName').value.trim() || 'Клиент';
+        const phoneVal = document.getElementById('contactPhone').value.trim();
+        const channelVal = document.getElementById('contactChannel').value;
+        const locVal = document.getElementById('contactLocation').value.trim();
+
+        if (!phoneVal) {
+          mainContactFeedback.className = 'rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-sm p-4';
+          mainContactFeedback.textContent = 'Пожалуйста, укажите телефон или мессенджер для связи.';
+          mainContactFeedback.classList.remove('hidden');
+          return;
+        }
+
+        mainContactFeedback.className = 'rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-sm p-4';
+        mainContactFeedback.textContent = `Спасибо, ${nameVal}! Заявка принята (${phoneVal}, формат: ${channelVal}${locVal ? ', локация: ' + locVal : ''}). Подготовим расчет и свяжемся с вами.`;
+        mainContactFeedback.classList.remove('hidden');
+        mainContactForm.reset();
+      });
+
+      // Первичная инициализация
+      populateSizesForType(calcState.type);
+      renderCatalog();
+      updateCalculator();
+    })();
+  </script>
+</body>
+</html>
